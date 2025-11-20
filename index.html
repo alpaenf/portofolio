@@ -262,6 +262,53 @@
             height: 100%;
             object-fit: cover;
         }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 14, 18, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            padding: 100px 24px 24px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .mobile-menu ul {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .mobile-menu ul li a {
+            font-size: 24px;
+            font-weight: 600;
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        #menuToggle {
+            position: relative;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -279,13 +326,27 @@
                 <li><a href="#projects" class="hover:text-[#00E5FF] transition-colors">Projects</a></li>
                 <li><a href="#contact" class="hover:text-[#00E5FF] transition-colors">Contact</a></li>
             </ul>
-            <button class="md:hidden text-[#00E5FF]">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button id="menuToggle" class="md:hidden text-[#00E5FF] relative z-[1000]">
+                <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
     </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+            <li><a href="#home" class="hover:text-[#00E5FF] transition-colors mobile-menu-link">Home</a></li>
+            <li><a href="#about" class="hover:text-[#00E5FF] transition-colors mobile-menu-link">About</a></li>
+            <li><a href="#skills" class="hover:text-[#00E5FF] transition-colors mobile-menu-link">Skills</a></li>
+            <li><a href="#projects" class="hover:text-[#00E5FF] transition-colors mobile-menu-link">Projects</a></li>
+            <li><a href="#contact" class="hover:text-[#00E5FF] transition-colors mobile-menu-link">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center relative grid-pattern hero-gradient pt-20">
@@ -322,13 +383,6 @@
                         <a href="#projects" class="btn-secondary inline-block">View Projects</a>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg class="w-6 h-6 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
             </div>
         </div>
     </section>
@@ -842,6 +896,34 @@
                 nav.style.background = 'rgba(10, 14, 18, 0.95)';
             } else {
                 nav.style.background = 'rgba(10, 14, 18, 0.8)';
+            }
+        });
+        
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
+                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+                
+                // Close mobile menu when link clicked
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
             }
         });
     </script>
