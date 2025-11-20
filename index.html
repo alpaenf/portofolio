@@ -734,25 +734,68 @@
             delay: 1
         });
 
-        // Text Reveal Animation for Hero Name
-        const heroName = document.querySelector('.hero-name');
-        const text = heroName.textContent;
-        heroName.textContent = '';
+        // Text Reveal Animation for Hero Name (Loop infinite with reverse fade out)
+        const heroNames = document.querySelectorAll('.hero-name');
         
-        for (let i = 0; i < text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = text[i];
-            span.style.display = 'inline-block';
-            span.style.opacity = '0';
-            heroName.appendChild(span);
+        function animateNames() {
+            let totalDelay = 0;
+            const allSpans = [];
             
-            gsap.to(span, {
-                opacity: 1,
-                duration: 0.05,
-                delay: 0.5 + (i * 0.03),
-                ease: 'power2.out'
+            // Fase 1: Muncul dari kiri (M -> H)
+            heroNames.forEach((heroName, lineIndex) => {
+                const text = heroName.textContent || heroName.getAttribute('data-text');
+                
+                if (!heroName.getAttribute('data-text')) {
+                    heroName.setAttribute('data-text', text);
+                }
+                
+                heroName.textContent = '';
+                heroName.style.display = 'block';
+                
+                const lineSpans = [];
+                for (let i = 0; i < text.length; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = text[i];
+                    span.style.display = 'inline-block';
+                    span.style.opacity = '0';
+                    heroName.appendChild(span);
+                    lineSpans.push(span);
+                    
+                    gsap.to(span, {
+                        opacity: 1,
+                        duration: 0.05,
+                        delay: totalDelay + (i * 0.05),
+                        ease: 'power2.out'
+                    });
+                }
+                
+                allSpans.push(...lineSpans);
+                totalDelay += text.length * 0.05 + 0.1;
             });
+            
+            // Fase 2: Hilang dari kanan (H -> M) setelah jeda
+            setTimeout(() => {
+                // Hilangkan dari belakang ke depan
+                for (let i = allSpans.length - 1; i >= 0; i--) {
+                    const delay = (allSpans.length - 1 - i) * 0.05;
+                    gsap.to(allSpans[i], {
+                        opacity: 0,
+                        duration: 0.05,
+                        delay: delay,
+                        ease: 'power2.out'
+                    });
+                }
+                
+                // Ulangi animasi setelah semua hilang
+                setTimeout(() => {
+                    animateNames();
+                }, (allSpans.length * 0.05 + 0.5) * 1000);
+                
+            }, (totalDelay + 1) * 1000);
         }
+        
+        // Mulai animasi pertama kali
+        animateNames();
 
         // About Section Animation
         gsap.from('.about-title', {
