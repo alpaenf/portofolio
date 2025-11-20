@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Future-Ready Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0A0E12;
+            color: #E4E4E7;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0A0E12;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00E5FF, #8A2BE2);
+            border-radius: 4px;
+        }
+        
+        /* Neon Glow Effect */
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5),
+                         0 0 20px rgba(0, 229, 255, 0.3),
+                         0 0 30px rgba(0, 229, 255, 0.2);
+        }
+        
+        .neon-glow-purple {
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5),
+                         0 0 20px rgba(138, 43, 226, 0.3),
+                         0 0 30px rgba(138, 43, 226, 0.2);
+        }
+        
+        .neon-border {
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2),
+                        inset 0 0 15px rgba(0, 229, 255, 0.1);
+        }
+        
+        .neon-border-purple {
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2),
+                        inset 0 0 15px rgba(138, 43, 226, 0.1);
+        }
+        
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 229, 255, 0.15),
+                        0 0 30px rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #00E5FF, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #00E5FF, #0099CC);
+            color: #0A0E12;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.5),
+                        0 10px 25px rgba(0, 229, 255, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #00E5FF;
+            font-weight: 500;
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: 2px solid #00E5FF;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+        
+        /* Grid Background Pattern */
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Skill Box */
+        .skill-box {
+            background: #1a1d23;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .skill-box:hover {
+            background: #1f2228;
+            border-color: rgba(0, 229, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+        }
+        
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        
+        .skill-icon svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Navigation */
+        nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(10, 14, 18, 0.95);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(0, 229, 255, 0.05);
+        }
+        
+        nav ul li a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00E5FF, #8A2BE2);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+        
+        nav ul li a:hover::before {
+            width: 100%;
+        }
+        
+        nav ul li a:hover {
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+        
+        /* Hero Section Gradient Overlay */
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(0, 229, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Hero Photo Animation */
+        .hero-photo-container {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Project Card */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .project-image {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #1a1d23;
+            height: 192px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .project-image-container {
+            height: 192px;
+            overflow: hidden;
+        }
+        
+        .project-image-container img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-bold">
+                <span class="gradient-text">Fana</span><span class="text-white">WEB</span>
+            </div>
+            <ul class="hidden md:flex space-x-8 text-sm font-medium">
+                <li><a href="#home" class="hover:text-[#00E5FF] transition-colors">Home</a></li>
+                <li><a href="#about" class="hover:text-[#00E5FF] transition-colors">About</a></li>
+                <li><a href="#skills" class="hover:text-[#00E5FF] transition-colors">Skills</a></li>
+                <li><a href="#projects" class="hover:text-[#00E5FF] transition-colors">Projects</a></li>
+                <li><a href="#contact" class="hover:text-[#00E5FF] transition-colors">Contact</a></li>
+            </ul>
+            <button class="md:hidden text-[#00E5FF]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative grid-pattern hero-gradient pt-20">
+        <div class="container mx-auto px-6">
+            <div class="hero-content flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
+                <!-- Profile Photo -->
+                <div class="hero-photo-container">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden neon-border p-1">
+                            <img src="saya.png" 
+                                 alt="Mukhammad Alfaen Fadillah" 
+                                 class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <!-- Decorative rings -->
+                        <div class="absolute inset-0 rounded-full border-2 border-[#8A2BE2] opacity-20 animate-ping" style="animation-duration: 3s;"></div>
+                    </div>
+                </div>
+                
+                <!-- Text Content -->
+                <div class="text-center lg:text-left max-w-3xl">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                        <span class="hero-name gradient-text neon-glow block">MUKHAMMAD</span>
+                        <span class="hero-name gradient-text neon-glow block">ALFAEN</span>
+                        <span class="hero-name gradient-text neon-glow block">FADILLAH</span>
+                    </h1>
+                    <p class="hero-tagline text-xl md:text-3xl text-gray-300 mb-4 font-light">
+                        I Build <span class="gradient-text font-semibold">Future-Ready</span> Experiences
+                    </p>
+                    <p class="hero-subtitle text-base md:text-lg text-gray-400 mb-10">
+                        Transforming innovative ideas into elegant digital solutions
+                    </p>
+                    <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#contact" class="btn-primary inline-block">Hire Me</a>
+                        <a href="#projects" class="btn-secondary inline-block">View Projects</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="about-title text-5xl md:text-6xl font-bold mb-12 text-center">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <div class="about-content glass rounded-2xl p-8 md:p-12 neon-border">
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+                        Saya adalah <span class="text-[#00E5FF] font-semibold">full-stack developer</span> dan <span class="text-[#8A2BE2] font-semibold">digital architect</span> dengan passion dalam menciptakan pengalaman web yang cutting-edge. Saya berspesialisasi dalam mengubah tantangan kompleks menjadi solusi yang intuitif dan scalable menggunakan teknologi modern seperti Laravel, Inertia.js, React, dan Vue.js.
+                    </p>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+                        Keahlian saya mencakup modern frameworks seperti Laravel dengan Inertia.js, frontend frameworks React dan Vue.js, serta styling dengan Tailwind CSS dan Bootstrap. Saya percaya pada penulisan kode yang clean, maintainable, dan menciptakan produk yang tidak hanya tampak memukau tetapi juga berkinerja sempurna.
+                    </p>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+                        Ketika tidak coding, saya menghabiskan waktu untuk mempelajari teknologi baru, berkontribusi pada proyek open-source, atau mentoring developer pemula. Mari ciptakan sesuatu yang luar biasa bersama-sama.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="skills-title text-5xl md:text-6xl font-bold mb-16 text-center">
+                Tech <span class="gradient-text">Stack</span>
+            </h2>
+            <div class="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- Frontend -->
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#61DAFB">
+                            <path d="M12 10.11c1.03 0 1.87.84 1.87 1.89 0 1-.84 1.85-1.87 1.85S10.13 13 10.13 12c0-1.05.84-1.89 1.87-1.89M7.37 20c.63.38 2.01-.2 3.6-1.7-.52-.59-1.03-1.23-1.51-1.9a22.7 22.7 0 0 1-2.4-.36c-.51 2.14-.32 3.61.31 3.96m.71-5.74l-.29-.51c-.11.29-.22.58-.29.86.27.06.57.11.88.16l-.3-.51m6.54-.76l.81-1.5-.81-1.5c-.3-.53-.62-1-.91-1.47C13.17 9 12.6 9 12 9c-.6 0-1.17 0-1.71.03-.29.47-.61.94-.91 1.47L8.57 12l.81 1.5c.3.53.62 1 .91 1.47.54.03 1.11.03 1.71.03.6 0 1.17 0 1.71-.03.29-.47.61-.94.91-1.47M12 6.78c-.19.22-.39.45-.59.72h1.18c-.2-.27-.4-.5-.59-.72m0 10.44c.19-.22.39-.45.59-.72h-1.18c.2.27.4.5.59.72M16.62 4c-.62-.38-2 .2-3.59 1.7.52.59 1.03 1.23 1.51 1.9.82.08 1.63.2 2.4.36.51-2.14.32-3.61-.32-3.96m-.7 5.74l.29.51c.11-.29.22-.58.29-.86-.27-.06-.57-.11-.88-.16l.3.51m1.45-7.05c1.47.84 1.63 3.05 1.01 5.63 2.54.75 4.37 1.99 4.37 3.68s-1.83 2.93-4.37 3.68c.62 2.58.46 4.79-1.01 5.63-1.46.84-3.45-.12-5.37-1.95-1.92 1.83-3.91 2.79-5.38 1.95-1.46-.84-1.62-3.05-1-5.63-2.54-.75-4.37-1.99-4.37-3.68s1.83-2.93 4.37-3.68c-.62-2.58-.46-4.79 1-5.63 1.47-.84 3.46.12 5.38 1.95 1.92-1.83 3.91-2.79 5.37-1.95M17.08 12c.34.75.64 1.5.89 2.26 2.1-.63 3.28-1.53 3.28-2.26s-1.18-1.63-3.28-2.26c-.25.76-.55 1.51-.89 2.26M6.92 12c-.34-.75-.64-1.5-.89-2.26-2.1.63-3.28 1.53-3.28 2.26s1.18 1.63 3.28 2.26c.25-.76.55-1.51.89-2.26m9 2.26l-.3.51c.31-.05.61-.1.88-.16-.07-.28-.18-.57-.29-.86l-.29.51m-2.89 4.04c1.59 1.5 2.97 2.08 3.59 1.7.64-.35.83-1.82.32-3.96-.77.16-1.58.28-2.4.36-.48.67-.99 1.31-1.51 1.9M8.08 9.74l.3-.51c-.31.05-.61.1-.88.16.07.28.18.57.29.86l.29-.51m2.89-4.04C9.38 4.2 8 3.62 7.37 4c-.63.35-.82 1.82-.31 3.96a22.7 22.7 0 0 1 2.4-.36c.48-.67.99-1.31 1.51-1.9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">React.js</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 256 256" fill="#9333EA">
+                            <path d="M128 0C57.307 0 0 57.307 0 128s57.307 128 128 128 128-57.307 128-128S198.693 0 128 0zm0 234.667C63.573 234.667 21.333 192.427 21.333 128S63.573 21.333 128 21.333 234.667 63.573 234.667 128 192.427 234.667 128 234.667zm0-181.334c-40.213 0-74.667 29.44-74.667 64 0 34.56 34.454 64 74.667 64s74.667-29.44 74.667-64c0-34.56-34.454-64-74.667-64zm0 106.667c-28.16 0-53.333-19.627-53.333-42.667S99.84 74.667 128 74.667s53.333 19.626 53.333 42.666-25.173 42.667-53.333 42.667z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Inertia.js</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#FF2D20">
+                            <path d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.188.326L9.93 23.949a.316.316 0 01-.066.027c-.008.002-.016.008-.024.01a.348.348 0 01-.192 0c-.011-.002-.02-.008-.03-.012-.02-.008-.042-.014-.062-.025L.533 18.755a.376.376 0 01-.189-.326V2.974c0-.033.005-.066.014-.098.003-.012.01-.02.014-.032a.369.369 0 01.023-.058c.004-.013.015-.022.023-.033l.033-.045c.012-.01.025-.018.037-.027.014-.012.027-.024.041-.034H.53L5.043.05a.375.375 0 01.375 0L9.93 2.647h.002c.015.01.027.021.04.033l.038.027c.013.014.02.03.033.045.008.011.02.021.025.033.01.02.017.038.024.058.003.011.01.021.013.032.01.031.014.064.014.098v9.652l3.76-2.164V5.527c0-.033.004-.066.013-.098.003-.01.01-.02.013-.032a.487.487 0 01.024-.059c.007-.012.018-.02.025-.033.012-.015.021-.03.033-.043.012-.012.025-.02.037-.028.014-.01.026-.023.041-.032h.001l4.513-2.598a.375.375 0 01.375 0l4.513 2.598c.016.01.027.021.042.031.012.01.025.018.036.028.013.014.022.03.034.044.008.012.019.021.024.033.011.02.018.04.024.06.006.01.012.021.015.032zm-.74 5.032V6.179l-1.578.908-2.182 1.256v4.283zm-4.51 7.75v-4.287l-2.146 1.225-6.127 3.498v4.325zM1.093 3.624v14.588l8.273 4.761v-4.325l-4.322-2.445-.002-.003H5.04c-.014-.01-.025-.021-.04-.031-.011-.01-.024-.018-.035-.027l-.001-.002c-.013-.012-.021-.025-.031-.04-.01-.011-.021-.022-.028-.036h-.002c-.008-.014-.013-.031-.02-.047-.006-.016-.014-.027-.018-.043a.49.49 0 01-.008-.057c-.002-.014-.006-.027-.006-.041V5.789l-2.18-1.257zM5.23.81L1.47 2.974l3.76 2.164 3.758-2.164zm1.956 13.505l2.182-1.256V3.624l-1.58.91-2.18 1.255v9.435zm11.581-10.95l-3.76 2.163 3.76 2.163 3.759-2.164zm-.376 4.978L16.21 7.087 14.63 6.18v4.283l2.182 1.256 1.58.908zm-8.65 9.654l5.514-3.148 2.756-1.572-3.757-2.163-4.323 2.489-3.941 2.27z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Laravel</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#38BDF8">
+                            <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Tailwind CSS</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#7952B3">
+                            <path d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572zm.324 1.206H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663zM24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268zm-7.927 2.817c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Bootstrap</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#4FC08D">
+                            <path d="M24,1.61H14.06L12,5.16,9.94,1.61H0L12,22.39ZM12,14.08,5.16,2.23H9.59L12,6.41l2.41-4.18h4.43Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Vue.js</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#00758F">
+                            <path d="M0 12C0 5.373 5.373 0 12 0c4.873 0 9.067 2.904 10.947 7.077l-15.87 15.87C2.904 21.067 0 16.873 0 12zM12.186 24C7.169 23.944 2.957 20.925.997 16.614L16.613.997C20.925 2.957 23.944 7.169 24 12.186a12.002 12.002 0 0 1-11.814 11.814z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">MySQL</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#F7DF1E">
+                            <path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">JavaScript</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#777BB4">
+                            <path d="M7.01 10.207h-.944l-.515 2.648h.838c.556 0 .97-.105 1.242-.314.272-.21.455-.559.55-1.049.092-.47.05-.802-.124-.995-.175-.193-.523-.29-1.047-.29zM12 5.688C5.373 5.688 0 8.514 0 12s5.373 6.313 12 6.313S24 15.486 24 12c0-3.486-5.373-6.312-12-6.312zm-3.26 7.451c-.261.25-.575.438-.917.551-.336.108-.765.164-1.285.164H5.357l-.327 1.681H3.652l1.23-6.326h2.65c.797 0 1.378.209 1.744.628.366.418.476 1.002.33 1.752a2.836 2.836 0 0 1-.305.847c-.143.255-.33.49-.561.703zm4.024.715l.543-2.799c.063-.318.039-.536-.068-.651-.107-.116-.336-.174-.687-.174h-.926l-.486 2.496-.624 3.195h-1.378l1.23-6.326h1.378l-.276 1.417h1.051c.895 0 1.499.174 1.812.523.312.349.4.877.263 1.585l-.517 2.655H12.764v.079zm4.214-4.107c-.626.554-1.221 1.048-1.784 1.482a6.346 6.346 0 0 1-1.158.768l-.26 1.335h2.046l-.19.975h-3.424l.84-4.316c.8-.591 1.54-1.171 2.22-1.742.68-.571 1.201-1.073 1.562-1.506.36-.434.54-.843.54-1.228 0-.352-.115-.645-.346-.878-.23-.233-.542-.35-.936-.35-.365 0-.68.098-.944.295-.264.197-.479.473-.645.828l-1.204-.483c.199-.51.518-.951.957-1.322.438-.37 1.009-.555 1.713-.555.747 0 1.347.198 1.801.595.454.396.681.923.681 1.579 0 .422-.116.844-.347 1.265-.231.422-.6.87-1.106 1.345z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">PHP</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#F05032">
+                            <path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Git</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#00D8FF">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.84 4.67h1.68v8.36h3.36v1.68H11.16V4.67zm-4.2 0h1.68v10.04h-1.68V4.67z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">REST API</h3>
+                </div>
+                
+                <div class="skill-box">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="#885630">
+                            <path d="M12 0C5.371 0 0 5.371 0 12s5.371 12 12 12 12-5.371 12-12S18.629 0 12 0zm4.5 18.75h-9c-.414 0-.75-.336-.75-.75V6c0-.414.336-.75.75-.75h9c.414 0 .75.336.75.75v12c0 .414-.336.75-.75.75z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white">Composer</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="projects-title text-5xl md:text-6xl font-bold mb-16 text-center">
+                Featured <span class="gradient-text">Projects</span>
+            </h2>
+            <div class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                
+                <!-- Project 1 -->
+                <div class="project-card glass-hover">
+                    <div class="project-image-container overflow-hidden">
+                        <img src="1.jpg" alt="Project 1" class="project-image h-48 w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 gradient-text">SKYLL</h3>
+                        <p class="text-gray-400 mb-4">
+                            Platform simulator profesi digital yang memungkinkan pengguna merasakan pengalaman kerja seperti AI Engineer atau Cyber Analyst melalui skenario interaktif dengan feedback AI personal.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#00E5FF] bg-opacity-10 text-[#00E5FF] border border-[#00E5FF] border-opacity-30">Laravel</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">React</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#00E5FF] bg-opacity-10 text-[#00E5FF] border border-[#00E5FF] border-opacity-30">Inertia.js</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">PostgreSQL</span>
+                        </div>
+                        <a href="#" class="text-[#00E5FF] hover:underline font-medium">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card glass-hover">
+                    <div class="project-image-container overflow-hidden">
+                        <img src="2.jpg" alt="Project 2" class="project-image h-48 w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 gradient-text">Pulihkan</h3>
+                        <p class="text-gray-400 mb-4">
+                            Aplikasi pendamping burnout mahasiswa yang membantu mengenali kondisi emosional melalui jurnal harian, analisis AI, dan pengalaman healing interaktif Journey to Calm.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#00E5FF] bg-opacity-10 text-[#00E5FF] border border-[#00E5FF] border-opacity-30">Vue.js</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">Laravel</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#00E5FF] bg-opacity-10 text-[#00E5FF] border border-[#00E5FF] border-opacity-30">FastAPI</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">MySQL</span>
+                        </div>
+                        <a href="#" class="text-[#00E5FF] hover:underline font-medium">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card glass-hover">
+                    <div class="project-image-container overflow-hidden">
+                        <img src="3.jpg" alt="Project 3" class="project-image h-48 w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 gradient-text">Portofolio</h3>
+                        <p class="text-gray-400 mb-4">
+                            Portofolio futuristik yang menampilkan kemampuan membangun website modern dengan desain elegan, animasi halus, dan pengalaman digital yang siap menghadapi masa depan.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">HTML</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#00E5FF] bg-opacity-10 text-[#00E5FF] border border-[#00E5FF] border-opacity-30">Tailwind CSS</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-[#8A2BE2] bg-opacity-10 text-[#8A2BE2] border border-[#8A2BE2] border-opacity-30">GSAP</span>
+                        </div>
+                        <a href="#" class="text-[#00E5FF] hover:underline font-medium">View Project →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Principles Section -->
+    <section id="principles" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="principles-title text-5xl md:text-6xl font-bold mb-16 text-center">
+                Work <span class="gradient-text">Principles</span>
+            </h2>
+            <div class="principles-grid grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <div class="principle-card glass rounded-2xl p-8 text-center neon-border">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 text-[#00E5FF]">Performance First</h3>
+                    <p class="text-gray-400">
+                        Every millisecond counts. I optimize for speed, efficiency, and seamless user experiences that feel instant.
+                    </p>
+                </div>
+
+                <div class="principle-card glass rounded-2xl p-8 text-center neon-border-purple">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h3 class="text-2xl font-bold mb-4 text-[#8A2BE2]">Design Excellence</h3>
+                    <p class="text-gray-400">
+                        Beautiful code creates beautiful products. I blend aesthetics with functionality to deliver memorable experiences.
+                    </p>
+                </div>
+
+                <div class="principle-card glass rounded-2xl p-8 text-center neon-border">
+                    <div class="text-5xl mb-4">🔒</div>
+                    <h3 class="text-2xl font-bold mb-4 text-[#00E5FF]">Security & Scale</h3>
+                    <p class="text-gray-400">
+                        Build for growth. Every solution is architected with security, scalability, and maintainability in mind.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/CTA Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="contact-title text-5xl md:text-7xl font-bold mb-6">
+                    Let's Build <span class="gradient-text neon-glow">The Future</span>
+                </h2>
+                <p class="contact-subtitle text-xl md:text-2xl text-gray-300 mb-12">
+                    Ready to transform your vision into reality? Let's create something extraordinary together.
+                </p>
+                <div class="contact-buttons flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <a href="mailto:contact@alfaenfadillah.dev" class="btn-primary inline-block">Get In Touch</a>
+                    <a href="#projects" class="btn-secondary inline-block">View My Work</a>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="flex justify-center gap-6 mt-12">
+                    <a href="https://wa.me/6285869236023" target="_blank" class="text-3xl hover:text-[#25D366] transition-colors" title="WhatsApp">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://shopee.co.id/4lfaen" target="_blank" class="text-3xl hover:text-[#EE4D2D] transition-colors" title="Shopee">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.8 6.35c-.11-.09-.2-.1-.31-.1-.25 0-.46.15-.54.38-.08.23-.17.46-.25.7-.14.37-.27.75-.41 1.12-.06.18-.13.36-.2.54-.03.08-.08.12-.16.12-.09 0-.13-.04-.16-.12-.07-.18-.14-.36-.2-.54-.14-.37-.27-.75-.41-1.12-.08-.24-.17-.47-.25-.7-.08-.23-.29-.38-.54-.38-.11 0-.2.01-.31.1-.41.3-.52.8-.36 1.31.17.54.34 1.07.51 1.61.18.55.35 1.11.53 1.66.02.07.05.13.07.2.01.03.02.05.03.08 0 .02.02.03.02.05v.02c.01.02.01.03.02.04v.01c0 .02.01.03.02.04v.02c.01.02.02.03.03.04v.01s.01.02.02.03v.01c.01.02.03.04.04.05l.01.01c.01.01.02.03.04.04l.01.01c.01.01.03.03.05.04.01.01.03.02.04.03l.01.01c.02.01.04.02.06.03h.01c.02.01.04.02.06.03h.02c.02 0 .04.01.06.02h.03c.02 0 .04.01.06.01h.84c.02 0 .04-.01.06-.01h.03c.02-.01.04-.01.06-.02h.02c.02-.01.04-.02.06-.03h.01c.02-.01.04-.02.06-.03l.01-.01c.01-.01.03-.02.04-.03.02-.01.03-.03.05-.04l.01-.01c.01-.01.03-.03.04-.04l.01-.01c.01-.02.03-.03.04-.05v-.01s.01-.02.02-.03v-.01c.01-.01.02-.03.03-.04v-.02c.01-.01.01-.03.02-.04v-.01c.01-.01.01-.03.02-.04v-.02c0-.02.02-.03.02-.05.01-.03.02-.05.03-.08.02-.07.05-.13.07-.2.18-.55.35-1.11.53-1.66.17-.54.34-1.07.51-1.61.16-.51.05-1.01-.36-1.31z"/>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-3xl hover:text-[#00E5FF] transition-colors" title="GitHub">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-3xl hover:text-[#00E5FF] transition-colors" title="LinkedIn">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-3xl hover:text-[#00E5FF] transition-colors" title="Twitter">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">
+                © 2025 <span class="gradient-text font-semibold">Mukhammad Alfaen Fadillah</span>. Crafted with passion and precision.
+            </p>
+            <p class="text-gray-500 text-sm mt-2">
+                Built with HTML, Tailwind CSS & GSAP
+            </p>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animations
+        gsap.from('.hero-name', {
+            duration: 1.2,
+            y: 100,
+            opacity: 0,
+            ease: 'power4.out',
+            delay: 0.3
+        });
+
+        gsap.from('.hero-tagline', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.6
+        });
+
+        gsap.from('.hero-subtitle', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.8
+        });
+
+        gsap.from('.hero-buttons', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 1
+        });
+
+        // Text Reveal Animation for Hero Name
+        const heroName = document.querySelector('.hero-name');
+        const text = heroName.textContent;
+        heroName.textContent = '';
+        
+        for (let i = 0; i < text.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = text[i];
+            span.style.display = 'inline-block';
+            span.style.opacity = '0';
+            heroName.appendChild(span);
+            
+            gsap.to(span, {
+                opacity: 1,
+                duration: 0.05,
+                delay: 0.5 + (i * 0.03),
+                ease: 'power2.out'
+            });
+        }
+
+        // About Section Animation
+        gsap.from('.about-title', {
+            scrollTrigger: {
+                trigger: '.about-title',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.about-content', {
+            scrollTrigger: {
+                trigger: '.about-content',
+                start: 'top 80%',
+            },
+            duration: 1.2,
+            y: 80,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.2
+        });
+
+        // Skills Section Animation
+        gsap.from('.skills-title', {
+            scrollTrigger: {
+                trigger: '.skills-title',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        // Skill boxes animation removed for visibility
+
+        // Projects Section Animation
+        gsap.from('.projects-title', {
+            scrollTrigger: {
+                trigger: '.projects-title',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.project-card', {
+            scrollTrigger: {
+                trigger: '.projects-grid',
+                start: 'top 80%',
+            },
+            duration: 0.8,
+            y: 30,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+
+        // Principles Section Animation
+        gsap.from('.principles-title', {
+            scrollTrigger: {
+                trigger: '.principles-title',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.principle-card', {
+            scrollTrigger: {
+                trigger: '.principles-grid',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 60,
+            opacity: 0,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+
+        // Contact Section Animation
+        gsap.from('.contact-title', {
+            scrollTrigger: {
+                trigger: '.contact-title',
+                start: 'top 80%',
+            },
+            duration: 1,
+            scale: 0.9,
+            opacity: 0,
+            ease: 'back.out(1.7)'
+        });
+
+        gsap.from('.contact-subtitle', {
+            scrollTrigger: {
+                trigger: '.contact-subtitle',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.2
+        });
+
+        gsap.from('.contact-buttons', {
+            scrollTrigger: {
+                trigger: '.contact-buttons',
+                start: 'top 80%',
+            },
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.4
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation Background on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 14, 18, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 14, 18, 0.8)';
+            }
+        });
+    </script>
+
+</body>
+</html>
